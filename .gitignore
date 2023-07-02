@@ -1,0 +1,10 @@
+venv/**
+data/**
+.DS_Store
+pretrain/**
+# exp/**
+**/__pycache__
+exp/**
+input/**
+output/**
+backup/**
