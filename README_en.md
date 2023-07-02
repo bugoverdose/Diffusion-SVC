@@ -107,7 +107,7 @@ You can modify the configuration file `configs/config.yaml` before preprocessing
 
 ### 1. Training without pre-trained model:
 ```bash
-python train.py -c configs/config.yaml
+PYTORCH_ENABLE_MPS_FALLBACK=1 python train.py -c configs/config.yaml
 ```
 
 ### 2. Pre-trained Models:
@@ -188,6 +188,22 @@ After the first validation, you can see the synthesized test audio in TensorBoar
 ## 6. Offline Inference
 ```bash
 python main.py -i <input.wav> -model <model_ckpt.pt> -o <output.wav> -k <keychange> -id <speaker_id> -speedup <speedup> -method <method> -kstep <kstep> -nmodel <nmodel>
+
+python main.py -i input/yasuo-english-lol.wav -model ./exp/diffusion-test/model_20000.pt -o output/yasuo-english-lol.wav
+
+python main.py -i input/yasuo-korean-lol.wav -model ./exp/diffusion-test/model_2000.pt -o output/yasuo-korean-lol_48000sr-2000eopch.wav
+
+python main.py -i input/yasuo-english-lol.wav -model ./exp/diffusion-test/model_10000.pt -o output/yasuo-english-lol.wav -method pndm
+
+python main.py -i input/yasuo-english-lol-44100.wav -model ./exp/diffusion-test/model_20000.pt -o output/yasuo-english-lol-44100sr-20000epoch.wav
+
+python main.py -i input/yasuo-english-lol-44100.wav -model ./exp/diffusion-test/model_600.pt -o output/yasuo-english-lol-44100sr-600epoch.wav
+
+python main.py -i input/yasuo-english-lol-44100.wav -model ./exp/diffusion-test/model_100.pt -o output/yasuo-english-lol-44100sr-100epoch.wav
+
+# 점진적으로 다시 시작
+
+python main.py -i input/yasuo-english-lol-44100.wav -model ./exp/diffusion-test/model_0.pt -o output/yasuo-english-lol-44100sr-0epoch.wav
 ```
 `-model` is the model path, `-k` is the pitch shift, `-speedup` is the speedup multiplier, `-method` is `pndm`,`ddim`,`unipc` or `dpm-solver`, `-kstep` is the shallow diffusion step, `-id` is the speaker ID of the diffusion model.
 

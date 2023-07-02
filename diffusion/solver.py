@@ -113,7 +113,7 @@ def train(args, initial_global_step, model, optimizer, scheduler, vocoder, loade
     else:
         raise ValueError(' [x] Unknown amp_dtype: ' + args.train.amp_dtype)
     for epoch in range(args.train.epochs):
-        for batch_idx, data in enumerate(loader_train):
+        for batch_idx, data in enumerate(loader_train): # torch.cuda.amp.GradScaler is enabled, but CUDA is not available.  Disabling.
             saver.global_step_increment()
             optimizer.zero_grad()
 

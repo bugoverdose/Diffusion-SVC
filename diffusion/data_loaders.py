@@ -77,6 +77,9 @@ def get_data_loaders(args, whole_audio=False):
         num_workers=args.train.num_workers if args.train.cache_device == 'cpu' else 0,
         persistent_workers=(args.train.num_workers > 0) if args.train.cache_device == 'cpu' else False,
         pin_memory=True if args.train.cache_device == 'cpu' else False
+    #     num_workers=args.train.num_workers if args.train.cache_device == 'mps' else 0,
+    #     persistent_workers=(args.train.num_workers > 0) if args.train.cache_device == 'mps' else False,
+    #     pin_memory=True if args.train.cache_device == 'mps' else False
     )
     data_valid = AudioDataset(
         args.data.valid_path,
@@ -112,7 +115,7 @@ class AudioDataset(Dataset):
             whole_audio=False,
             extensions=['wav'],
             n_spk=1,
-            device='cpu',
+            device='mps',
             fp16=False,
             use_aug=False,
             use_spk_encoder=False,
@@ -137,6 +140,7 @@ class AudioDataset(Dataset):
         self.whole_audio = whole_audio
         self.use_aug = use_aug
         self.data_buffer = {}
+
         self.pitch_aug_dict = np.load(os.path.join(self.path_root, 'pitch_aug_dict.npy'), allow_pickle=True).item()
         if load_all_data:
             print('Load all the data from :', path_root)

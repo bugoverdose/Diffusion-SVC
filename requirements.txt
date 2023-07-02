@@ -7,7 +7,7 @@ gin_config
 librosa
 local_attention
 matplotlib
-numpy
+numpy==1.23.4
 praat-parselmouth
 pyworld
 PyYAML
